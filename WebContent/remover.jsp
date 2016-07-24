@@ -1,3 +1,7 @@
+<%@ page import="up.servlets.facade.ProdutoFacade"%>
+<%@ page import="up.servlets.model.Produto"%>
+<%@ page import="java.util.List"%>
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 
@@ -12,7 +16,7 @@
 <meta name="author" content="">
 <link rel="icon" href="../../favicon.ico">
 
-<title>Login</title>
+<title>Produtos</title>
 
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet"
@@ -32,21 +36,34 @@
 	integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
 	crossorigin="anonymous"></script>
 </head>
-
 <body>
-
+<%
+	if(session.getAttribute("userid") == null){
+		response.sendRedirect("login.jsp");
+	}
+%>
 	<div class="container">
 		<div class="row">
-			<div class="col-md-4"></div>
-			<div class="col-md-4">
-				<form action="Produtos" method="post">
-					<h2>Login</h2>
-					<input type="text" id="userid" name="userid" class="form-control" placeholder="Usuário" required autofocus> 
-					<input type="password" id="password" name="password" class="form-control" placeholder="Senha" required>
-					<button class="btn btn-lg btn-primary btn-block" type="submit" name="action" value="Entrar">Entrar</button>
-				</form>
+			<div class="col-md-3"></div>
+			<div class="col-md-6">	
+				<h2>Remoção de Produto</h2>				
+					<%
+					try {
+						String codigo = request.getParameter("codigo");
+						Integer id = Integer.valueOf(codigo);
+						
+						ProdutoFacade facade = new ProdutoFacade();
+						facade.delete(id);
+						out.println("Produto de código "+ id +" removido com sucesso!");
+						
+					} catch (Exception e) {
+						out.println("Erro: Produto não encontrado!");
+						e.printStackTrace();
+					}
+					%>
+					<a href="produtos.jsp"><button type="button" class="btn btn-default btn-lg btn-block">Voltar</button></a>
 			</div>
-			<div class="col-md-4"></div>
+			<div class="col-md-3"></div>
 		</div>
 	</div>
 

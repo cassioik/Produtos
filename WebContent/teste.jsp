@@ -1,7 +1,6 @@
 <%@ page import="up.servlets.model.Produto" %>
-<%@ page import="javax.persistence.EntityManager" %>
-<%@ page import="javax.persistence.EntityManagerFactory" %>
-<%@ page import="javax.persistence.Persistence" %>
+<%@page import="up.servlets.facade.ProdutoFacade"%>
+<%@page import="java.util.List"%>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -14,30 +13,11 @@
 <body>
 
 <%
-	EntityManagerFactory factory = null;
-	EntityManager em = null;
-	
-	try {
-		factory = Persistence.createEntityManagerFactory("produtos_pu");
-		em = factory.createEntityManager();
-		
-		Produto produto = null;
-		
-		em.getTransaction().begin();
-		produto = em.find(Produto.class, 1);
-		em.getTransaction().commit();
-		
-		System.out.println(produto.getNome());
-		
-	} catch (Exception e) {
-		if(em!=null && em.getTransaction().isActive())
-			em.getTransaction().rollback();
-		e.printStackTrace();
-	} finally {
-		if(em!=null)
-			em.close();
-		if(factory!=null)
-			factory.close();
+
+	ProdutoFacade facade = new ProdutoFacade();
+	List<Produto> produtos = facade.listar();
+	for(Produto p:produtos){
+		System.out.println(p.getNome());
 	}
 
 %>

@@ -1,11 +1,7 @@
 package up.servlets;
 
-import javax.swing.plaf.synth.SynthSeparatorUI;
-
 import up.servlets.dao.GenericDAO;
-import up.servlets.dao.ProdutoDAO;
 import up.servlets.dao.UsuarioDAO;
-import up.servlets.model.Produto;
 import up.servlets.model.Usuario;
 
 public class Teste {
